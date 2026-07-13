@@ -1,0 +1,32 @@
+app:
+  title: "EEG Disease Classification Demo"
+  host: "127.0.0.1"
+  port: 7860
+  share: false
+
+inference:
+  backend: "mock_reve"
+  threshold: 0.5
+  device: "auto"
+
+files:
+  allowed_extensions:
+    - ".edf"
+    - ".set"
+    - ".fif"
+    - ".mat"
+    - ".npy"
+    - ".npz"
+  max_size_mb: 1024
+
+reve:
+  checkpoint_path: null
+  model_size: null
+  target_sampling_rate: 200
+  bandpass_low_hz: 0.5
+  bandpass_high_hz: 99.5
+  zscore: true
+  clip_std: 15.0
+  window_seconds: 10
+  window_overlap_seconds: 0
+  patch_seconds: 1
