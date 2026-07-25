@@ -11,7 +11,7 @@ def test_default_config_loads() -> None:
     config_path = Path(__file__).resolve().parents[1] / "configs" / "default.yaml"
     settings = load_config(config_path)
 
-    assert settings.inference.backend == "mock_reve"
+    assert settings.inference.backend == "real_reve"
     assert settings.inference.threshold == 0.5
     assert ".edf" in settings.files.allowed_extensions
 

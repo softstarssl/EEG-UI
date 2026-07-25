@@ -34,8 +34,9 @@ class FileSettings:
 
 @dataclass(frozen=True)
 class ReveSettings:
-    checkpoint_path: str | None = None
-    model_size: str | None = None
+    model_id: str = "brain-bzh/reve-base"
+    depression_checkpoint: str | None = None
+    adhd_checkpoint: str | None = None
     target_sampling_rate: int = 200
     bandpass_low_hz: float = 0.5
     bandpass_high_hz: float = 99.5
@@ -44,6 +45,10 @@ class ReveSettings:
     window_seconds: int = 10
     window_overlap_seconds: int = 0
     patch_seconds: int = 1
+    n_times: int = 2000
+    sfreq: float = 200.0
+    input_window_seconds: float = 10.0
+    use_attention_pooling: bool = True
 
 
 @dataclass(frozen=True)

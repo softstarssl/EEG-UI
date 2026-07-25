@@ -4,3 +4,6 @@ PyYAML>=6.0
 scipy>=1.11
 mne>=1.6
 pytest>=8.0
+# 真实 REVE 推理（可选，Mock 模式不需要）
+# torch>=2.0
+# braindecode>=0.8

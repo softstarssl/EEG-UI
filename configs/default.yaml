@@ -1,11 +1,11 @@
 app:
-  title: "EEG Disease Classification Demo"
+  title: "NeuroRegen AI"
   host: "127.0.0.1"
   port: 7860
   share: false
 
 inference:
-  backend: "mock_reve"
+  backend: "real_reve"
   threshold: 0.5
   device: "auto"
 
@@ -20,8 +20,13 @@ files:
   max_size_mb: 1024
 
 reve:
-  checkpoint_path: null
-  model_size: null
+  # ---- 真实 REVE 模型配置 ----
+  # 将 inference.backend 改为 "real_reve" 后生效
+  model_id: "brain-bzh/reve-base"
+  depression_checkpoint: "E:/Desktop/eeg/outputs/checkpoints/exp_TDBRAIN_depression/best_model.pt"
+  adhd_checkpoint: "E:/Desktop/eeg/outputs/checkpoints/exp_TDBRAIN_adhd/best_model.pt"
+
+  # ---- 预处理参数（需与训练时一致） ----
   target_sampling_rate: 200
   bandpass_low_hz: 0.5
   bandpass_high_hz: 99.5
@@ -30,3 +35,9 @@ reve:
   window_seconds: 10
   window_overlap_seconds: 0
   patch_seconds: 1
+
+  # ---- 模型输入规格 ----
+  n_times: 2000
+  sfreq: 200.0
+  input_window_seconds: 10.0
+  use_attention_pooling: true
