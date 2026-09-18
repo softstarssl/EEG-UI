@@ -11,7 +11,7 @@ from eeg_ui.schemas import EEGRecord
 def load_eeg_record(file_path: str | None, settings: FileSettings) -> EEGRecord:
     validated = validate_file(file_path, settings)
     suffix = validated.path.suffix.lower()
-    if suffix in {".edf", ".set", ".fif"}:
+    if suffix in {".edf", ".bdf", ".set", ".fif", ".raw", ".cnt"}:
         record = load_with_mne(validated.path)
     elif suffix == ".mat":
         record = load_mat(validated.path)

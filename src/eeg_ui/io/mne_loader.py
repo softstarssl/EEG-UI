@@ -19,8 +19,11 @@ def load_with_mne(path: Path) -> EEGRecord:
 
     readers = {
         ".edf": mne.io.read_raw_edf,
+        ".bdf": mne.io.read_raw_bdf,
         ".set": mne.io.read_raw_eeglab,
         ".fif": mne.io.read_raw_fif,
+        ".raw": mne.io.read_raw_egi,
+        ".cnt": mne.io.read_raw_cnt,
     }
     try:
         raw = readers[path.suffix.lower()](path, preload=False, verbose="ERROR")

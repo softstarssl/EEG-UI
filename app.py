@@ -17,6 +17,8 @@ def main() -> None:
         server_name=config.app.host,
         server_port=config.app.port,
         share=config.app.share,
+        theme=app.theme,
+        css=app.app_css,
     )
 
 

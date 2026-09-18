@@ -5,18 +5,29 @@ app:
   share: false
 
 inference:
-  backend: "real_reve"
+  # 推理后端：
+  #   http_reve : 调用部署服务器（最终版 subject-level 眼态模型，推荐）
+  #   mock_reve : 本地模拟（无模型，演示界面用）
+  #   real_reve : 本地旧版线性探测模型（已弃用）
+  backend: "http_reve"
   threshold: 0.5
   device: "auto"
+
+server:
+  host: "127.0.0.1"
+  port: 8765
+  # url: "http://127.0.0.1:8765"   # 直接指定完整地址（覆盖 host/port）
 
 files:
   allowed_extensions:
     - ".edf"
+    - ".bdf"
     - ".set"
     - ".fif"
+    - ".raw"
+    - ".cnt"
     - ".mat"
     - ".npy"
-    - ".npz"
   max_size_mb: 1024
 
 reve:

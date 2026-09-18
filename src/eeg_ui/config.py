@@ -28,7 +28,7 @@ class InferenceSettings:
 
 @dataclass(frozen=True)
 class FileSettings:
-    allowed_extensions: tuple[str, ...] = (".edf", ".set", ".fif", ".mat", ".npy", ".npz")
+    allowed_extensions: tuple[str, ...] = (".edf", ".set", ".fif", ".mat", ".npy")
     max_size_mb: int = 1024
 
 
@@ -52,11 +52,25 @@ class ReveSettings:
 
 
 @dataclass(frozen=True)
+class ServerSettings:
+    host: str = "127.0.0.1"
+    port: int = 8765
+    url: str | None = None
+
+    @property
+    def base_url(self) -> str:
+        if self.url:
+            return self.url.rstrip("/")
+        return f"http://{self.host}:{self.port}"
+
+
+@dataclass(frozen=True)
 class Settings:
     app: AppSettings
     inference: InferenceSettings
     files: FileSettings
     reve: ReveSettings
+    server: ServerSettings = ServerSettings()
 
 
 def _section(data: dict[str, Any], name: str) -> dict[str, Any]:
@@ -90,10 +104,12 @@ def load_config(path: Path) -> Settings:
     inference_data = _section(raw, "inference")
     files_data = _section(raw, "files")
     reve_data = _section(raw, "reve")
+    server_data = _section(raw, "server")
 
     try:
         threshold = float(inference_data.get("threshold", 0.5))
         max_size_mb = int(files_data.get("max_size_mb", 1024))
+        server_port = int(server_data.get("port", 8765))
     except (TypeError, ValueError) as error:
         raise ConfigError(f"Invalid numeric configuration value: {error}") from error
 
@@ -117,7 +133,12 @@ def load_config(path: Path) -> Settings:
             max_size_mb=max_size_mb,
         )
         reve = ReveSettings(**reve_data)
+        server = ServerSettings(
+            host=str(server_data.get("host", "127.0.0.1")),
+            port=server_port,
+            url=server_data.get("url"),
+        )
     except (TypeError, ValueError) as error:
         raise ConfigError(f"Invalid configuration value: {error}") from error
 
-    return Settings(app=app, inference=inference, files=files, reve=reve)
+    return Settings(app=app, inference=inference, files=files, reve=reve, server=server)

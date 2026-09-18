@@ -51,3 +51,4 @@ class PredictionResult:
     backend: str
     is_mock: bool
     message: str
+    details: str = ""
